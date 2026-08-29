@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rescue Vision AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div>
+            <h1>RESCUE VISION <span>AI</span></h1>
+            <p>Real-time visual intelligence system</p>
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+    </header>
+
+
+    <main class="dashboard">
+
+        <!-- LIVE CAMERA -->
+        <section class="camera-panel">
+
+            <div class="panel-header">
+                <h2>LIVE CAMERA</h2>
+
+                <div class="live-indicator">
+                    <span></span> LIVE
+                </div>
+            </div>
+
+            <div class="camera-container">
+
+                <video
+                    id="camera"
+                    autoplay
+                    playsinline>
+                </video>
+
+                <canvas id="detectionCanvas"></canvas>
+
+                <div id="cameraMessage">
+                    Initializing camera...
+                </div>
+
+            </div>
+
+            <div class="camera-controls">
+                <button id="startCamera">
+                    START CAMERA
+                </button>
+
+                <button id="snapshotButton" disabled>
+                    📸 CAPTURE INCIDENT
+                </button>
+            </div>
+
+        </section>
+
+
+        <!-- ANALYSIS -->
+        <section class="analysis-panel">
+
+            <div class="panel-header">
+                <h2>INCIDENT ANALYSIS</h2>
+            </div>
+
+
+            <div class="snapshot-container">
+
+                <div class="snapshot-placeholder" id="snapshotPlaceholder">
+                    <div class="placeholder-icon">📷</div>
+                    <p>No incident captured</p>
+                    <small>
+                        Capture a frame from the live camera
+                    </small>
+                </div>
+
+                <img
+                    id="snapshot"
+                    class="snapshot-image"
+                    alt="Captured incident">
+            </div>
+
+
+            <button
+                id="analysisButton"
+                class="analysis-button"
+                disabled>
+
+                🤖 AI ANALYSIS
+
+            </button>
+
+
+            <div class="insights">
+
+                <div class="insights-header">
+                    <h3>AI INSIGHTS</h3>
+
+                    <span id="analysisStatus">
+                        WAITING
+                    </span>
+                </div>
+
+                <div
+                    id="analysisResult"
+                    class="analysis-result">
+
+                    <p>
+                        Capture an incident and run AI analysis
+                        to receive visual insights.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <span>RESCUE VISION AI</span>
+        <span>Prototype v1.0</span>
+    </footer>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
