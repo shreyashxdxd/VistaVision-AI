@@ -15,7 +15,7 @@ The system uses a live camera feed to detect people using YOLO and allows the us
 
 ## How It Works
 
-Live Camera
+```Live Camera
      ↓
 YOLO Human Detection
      ↓
@@ -26,6 +26,7 @@ Capture Snapshot
 AI Vision Analysis
      ↓
 AI Insights
+```
 
 ## Tech Stack
 
