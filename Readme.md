@@ -40,6 +40,7 @@ AI Insights
 
 ## Project Structure
 
+```
 rescue-vision-ai/
 │
 ├── backend/
@@ -53,6 +54,7 @@ rescue-vision-ai/
 ├── yolo11n.pt
 ├── .gitignore
 └── README.md
+```
 
 > the `.env` file should never be uploaded to GitHub because it contains the Gemini API key.
 
