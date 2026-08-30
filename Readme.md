@@ -1,6 +1,6 @@
 # VistaVision AI
 
-Rescue Vision AI is a real-time computer vision prototype designed to assist in emergency and rescue scenarios.
+VistaVision AI is a real-time computer vision prototype designed to assist in emergency and rescue scenarios.
 
 The system uses a live camera feed to detect people using YOLO and allows the user to capture a snapshot of an incident. The captured image can then be analyzed by an AI vision model to provide useful visual insights about the scene.
 
@@ -56,8 +56,6 @@ rescue-vision-ai/
 └── README.md
 ```
 
-> the `.env` file should never be uploaded to GitHub because it contains the Gemini API key.
-
 ## Running the Project
 
 ### 1. Clone the repository
@@ -101,7 +99,7 @@ python -m uvicorn backend.main:app --reload
 
 The backend will run at:
 
-http://127.0.0.1:8000
+http://(Port number here)
 
 ### 6. Start the frontend
 
