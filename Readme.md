@@ -15,7 +15,8 @@ The system uses a live camera feed to detect people using YOLO and allows the us
 
 ## How It Works
 
-```Live Camera
+```
+Live Camera
      ↓
 YOLO Human Detection
      ↓
@@ -32,8 +33,8 @@ AI Insights
 
 - Python
 - FastAPI
-- YOLO
-- Gemini API
+- YOLO Algorithm
+- AI API (Gemini in this case)
 - HTML
 - CSS
 - JavaScript
@@ -41,7 +42,7 @@ AI Insights
 ## Project Structure
 
 ```
-rescue-vision-ai/
+VistaVision AI/
 │
 ├── backend/
 │   └── main.py
@@ -61,8 +62,8 @@ rescue-vision-ai/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/rescue-vision-ai.git
-cd rescue-vision-ai
+git clone https://github.com/YOUR_USERNAME/VistaVision-AI.git
+cd VistaVision
 ```
 
 ### 2. Create and activate a virtual environment
@@ -74,7 +75,7 @@ python -m venv .venv
 Windows:
 
 ```powershell
-.venv\Scriptsctivate
+.venv\Scripts\ctivate
 ```
 
 ### 3. Install dependencies
