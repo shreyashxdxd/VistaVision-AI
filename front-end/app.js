@@ -305,7 +305,7 @@ function drawDetections(
 
 
             const label =
-                `PERSON ${confidence}%`;
+                `${detection.class.toUpperCase()} ${confidence}%`;
 
 
             // Bounding box

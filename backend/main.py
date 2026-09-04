@@ -6,7 +6,6 @@ from ultralytics import YOLO
 from PIL import Image
 
 from google import genai
-from google.genai import types
 
 from dotenv import load_dotenv
 
@@ -30,14 +29,13 @@ load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-if not GEMINI_API_KEY:
-    raise RuntimeError(
-        "GEMINI_API_KEY not found in .env"
+gemini_client = None
+if GEMINI_API_KEY:
+    gemini_client = genai.Client(
+        api_key=GEMINI_API_KEY
     )
-
-gemini_client = genai.Client(
-    api_key=GEMINI_API_KEY
-)
+else:
+    print("WARNING: GEMINI_API_KEY not found. AI visual analysis features (/analyze) will be disabled.")
 
 # Load model once
 model = YOLO("yolo11n.pt")
@@ -60,34 +58,48 @@ async def detect(file: UploadFile = File(...)):
         io.BytesIO(image_bytes)
     ).convert("RGB")
 
-    # Only detect PERSON
-    results = model(
+    # Detect person (0), bicycle (1), car (2), motorcycle (3), bus (5), truck (7), cell phone (67)
+    classes_to_detect = [0, 1, 2, 3, 5, 7, 67]
+    class_mapping = {
+        0: "person",
+        1: "bicycle",
+        2: "car",
+        3: "motorcycle",
+        5: "bus",
+        7: "truck",
+        67: "cell phone"
+    }
+
+    # Run YOLO with tracking support
+    results = model.track(
         image,
         imgsz=640,
         conf=0.35,
-        classes=[0],
+        classes=classes_to_detect,
+        persist=True,
         verbose=False
     )
 
     detections = []
 
     for result in results:
+        if result.boxes is None:
+            continue
 
         for box in result.boxes:
-
             x1, y1, x2, y2 = box.xyxy[0].tolist()
-
             confidence = float(box.conf[0])
+            cls_id = int(box.cls[0].item())
+            class_name = class_mapping.get(cls_id, "unknown")
+            
+            # Get track ID if available
+            track_id = int(box.id[0].item()) if box.id is not None else None
 
             detections.append({
-                "class": "person",
+                "class": class_name,
                 "confidence": confidence,
-                "box": [
-                    x1,
-                    y1,
-                    x2,
-                    y2
-                ]
+                "box": [x1, y1, x2, y2],
+                "track_id": track_id
             })
 
     return {
@@ -147,30 +159,25 @@ IMPORTANT:
 """
 
 
+    if not gemini_client:
+        return {
+            "success": False,
+            "error": "Gemini API key is not configured. Please set GEMINI_API_KEY in .env"
+        }
+
     try:
-
-        interaction = gemini_client.interactions.create(
-
-            model="gemini-3.6-flash",
-
-            input=[
-                {
-                    "type": "text",
-                    "text": prompt
-                },
-
-                {
-                    "type": "image",
-                    "data": image_base64,
-                    "mime_type": "image/jpeg"
-                }
+        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        response = gemini_client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=[
+                image,
+                prompt
             ]
         )
 
-
         return {
             "success": True,
-            "analysis": interaction.output_text
+            "analysis": response.text
         }
 
 

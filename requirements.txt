@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+ultralytics
+pillow
+google-genai
+python-dotenv
+python-multipart
+PySide6
+opencv-python
